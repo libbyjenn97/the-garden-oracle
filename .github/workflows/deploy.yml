@@ -60,7 +60,8 @@ jobs:
             echo "Creating build configuration..."
             ibmcloud ce build create \
               --name garden-oracle-build \
-              --source . \
+              --source https://github.com/${{ github.repository }} \
+              --commit ${{ github.ref_name }} \
               --context-dir . \
               --dockerfile Dockerfile \
               --image us.icr.io/cr-itz-c1mx6por/garden-oracle \
