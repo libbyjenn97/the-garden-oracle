@@ -147,8 +147,9 @@ class SeedsPage {
             if (backendConfig.useProxy && backendConfig.notion_configured) {
                 console.log('✅ Using backend proxy for Notion API');
                 // Backend will handle all Notion API calls
-                // No need to initialize credentials on frontend
-                config.setCredentials('proxy', 'proxy'); // Dummy values
+                // Initialize NotionClient with proxy mode
+                config.setCredentials('proxy', 'proxy');
+                await this.notionClient.init('proxy', 'proxy');
                 return;
             }
         } catch (error) {
