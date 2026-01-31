@@ -53,10 +53,14 @@ function setupEventListeners() {
         });
     }
 
-    // Card click to flip
+    // Card back click to draw card
     if (cardBack) {
         cardBack.addEventListener('click', () => {
-            if (isCardFlipped) {
+            if (!isCardFlipped) {
+                // If card is not flipped, draw a card
+                drawCard();
+            } else {
+                // If card is flipped, flip it back
                 flipCard();
             }
         });
