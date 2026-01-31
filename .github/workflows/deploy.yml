@@ -9,7 +9,7 @@ on:
 env:
   IBM_CLOUD_REGION: au-syd
   IBM_CLOUD_RESOURCE_GROUP: itz-wxo-697d5267010cfefe9db664
-  CODE_ENGINE_PROJECT: garden-oracle-project
+  CODE_ENGINE_PROJECT: garden-oracle
   CODE_ENGINE_APP: garden-oracle
 
 jobs:
