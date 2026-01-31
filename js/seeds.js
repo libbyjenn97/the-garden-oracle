@@ -137,16 +137,34 @@ class SeedsPage {
     }
 
     async loadConfiguration() {
-        // Try to load from .env file
+        console.log('Loading configuration...');
+        
+        // Check if backend has credentials configured
+        try {
+            const response = await fetch('/api/config');
+            const backendConfig = await response.json();
+            
+            if (backendConfig.useProxy && backendConfig.notion_configured) {
+                console.log('✅ Using backend proxy for Notion API');
+                // Backend will handle all Notion API calls
+                // No need to initialize credentials on frontend
+                config.setCredentials('proxy', 'proxy'); // Dummy values
+                return;
+            }
+        } catch (error) {
+            console.warn('Could not reach backend config endpoint:', error);
+        }
+        
+        // Fallback: Try to load from .env file (for local development)
         const loaded = await config.loadFromEnv();
         
         if (!loaded) {
-            // Credentials must be set in .env file
-            console.error('ERROR: Notion credentials not found. Please create a .env file with NOTION_TOKEN and NOTION_DATABASE_ID');
+            // Credentials must be set in .env file or backend
+            console.error('ERROR: Notion credentials not found. Please set NOTION_TOKEN and NOTION_DATABASE_ID environment variables on the server.');
             return;
         }
 
-        // Initialize Notion client
+        // Initialize Notion client with credentials
         await this.notionClient.init(
             config.getNotionToken(),
             config.getNotionDatabaseId()

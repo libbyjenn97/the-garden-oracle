@@ -70,6 +70,14 @@ app.post('/api/notion/query', async (req, res) => {
     }
 });
 
+// Config endpoint - tells frontend that backend will handle Notion API
+app.get('/api/config', (req, res) => {
+    res.json({
+        useProxy: true,
+        notion_configured: !!(process.env.NOTION_TOKEN && process.env.NOTION_DATABASE_ID)
+    });
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
     res.json({
