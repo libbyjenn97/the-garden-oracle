@@ -41,6 +41,18 @@ jobs:
           fi
           ibmcloud ce project select --name ${{ env.CODE_ENGINE_PROJECT }}
 
+      - name: Create registry secret
+        run: |
+          # Check if registry secret exists
+          if ! ibmcloud ce registry get --name garden-oracle-registry-secret &>/dev/null; then
+            echo "Creating registry secret..."
+            ibmcloud ce registry create \
+              --name garden-oracle-registry-secret \
+              --server us.icr.io \
+              --username iamapikey \
+              --password ${{ secrets.IBM_CLOUD_API_KEY }}
+          fi
+          
       - name: Create or update build configuration
         run: |
           # Check if build exists
