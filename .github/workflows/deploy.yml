@@ -41,16 +41,30 @@ jobs:
           fi
           ibmcloud ce project select --name ${{ env.CODE_ENGINE_PROJECT }}
 
-      - name: Trigger build
+      - name: Create or update build configuration
+        run: |
+          # Check if build exists
+          if ! ibmcloud ce build get --name garden-oracle-build &>/dev/null; then
+            echo "Creating build configuration..."
+            ibmcloud ce build create \
+              --name garden-oracle-build \
+              --source . \
+              --context-dir . \
+              --dockerfile Dockerfile \
+              --image us.icr.io/cr-itz-c1mx6por/garden-oracle \
+              --registry-secret garden-oracle-registry-secret \
+              --size small
+          fi
+          
+      - name: Trigger build and deploy
         run: |
           echo "Submitting build run..."
           ibmcloud ce buildrun submit --build garden-oracle-build --wait
           
-      - name: Update application environment variables
-        run: |
-          echo "Updating application with latest environment variables..."
+          echo "Updating application..."
           ibmcloud ce app update \
             --name ${{ env.CODE_ENGINE_APP }} \
+            --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
             --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
             --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
           
