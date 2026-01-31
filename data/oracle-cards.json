@@ -1,0 +1,454 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "name": "Ancestral Lands",
+      "category": "ritual",
+      "keywords": ["heritage", "roots", "tradition", "heirloom"],
+      "meaning": "Honor the wisdom of those who came before. Plant seeds passed down through generations.",
+      "agent_prompt": "Focus on heirloom varieties and heritage seeds with historical significance",
+      "moon_affinity": ["full", "waning_gibbous"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 2,
+      "name": "Aquamarine",
+      "category": "celestial",
+      "keywords": ["clarity", "protection", "water", "courage"],
+      "meaning": "Crystal clear intentions guide your garden. Water brings life and courage to grow.",
+      "agent_prompt": "Suggest water-loving plants and those needing protection from harsh conditions",
+      "moon_affinity": ["new", "waxing_crescent"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 3,
+      "name": "Aries",
+      "category": "celestial",
+      "keywords": ["initiative", "fire", "new beginnings", "courage"],
+      "meaning": "Bold action and fiery energy. Time to start ambitious garden projects.",
+      "agent_prompt": "Recommend fast-growing, bold plants and new planting initiatives",
+      "moon_affinity": ["new", "waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 4,
+      "name": "Aromatherapy",
+      "category": "mystical",
+      "keywords": ["healing", "scent", "herbs", "wellness"],
+      "meaning": "The garden heals through fragrance. Plant herbs that soothe the spirit.",
+      "agent_prompt": "Focus on aromatic herbs and medicinal plants with therapeutic properties",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 5,
+      "name": "Astrological New Year",
+      "category": "celestial",
+      "keywords": ["fresh start", "cycles", "renewal", "planning"],
+      "meaning": "The wheel turns anew. Set intentions for the growing season ahead.",
+      "agent_prompt": "Suggest planning activities and seeds for the upcoming season",
+      "moon_affinity": ["new"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 6,
+      "name": "Chicks",
+      "category": "fauna",
+      "keywords": ["new life", "nurturing", "protection", "growth"],
+      "meaning": "Tender new life requires gentle care. Protect your seedlings as they emerge.",
+      "agent_prompt": "Focus on starting seeds indoors and protecting young plants",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 7,
+      "name": "Community Garden",
+      "category": "action",
+      "keywords": ["sharing", "collaboration", "abundance", "connection"],
+      "meaning": "Gardens grow stronger together. Share seeds, knowledge, and harvests.",
+      "agent_prompt": "Suggest companion planting and varieties good for sharing",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 8,
+      "name": "Composting",
+      "category": "action",
+      "keywords": ["transformation", "soil", "cycle", "renewal"],
+      "meaning": "Death becomes life. Nourish your soil with nature's alchemy.",
+      "agent_prompt": "Focus on soil preparation and plants that benefit from rich compost",
+      "moon_affinity": ["waning_crescent", "new"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 9,
+      "name": "Creating Altars",
+      "category": "ritual",
+      "keywords": ["sacred space", "intention", "beauty", "devotion"],
+      "meaning": "Make your garden a sacred space. Plant with reverence and beauty.",
+      "agent_prompt": "Suggest ornamental and spiritually significant plants",
+      "moon_affinity": ["full", "new"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 10,
+      "name": "Daffodils",
+      "category": "flora",
+      "keywords": ["spring", "hope", "rebirth", "sunshine"],
+      "meaning": "Golden trumpets announce spring's arrival. Plant bulbs for future joy.",
+      "agent_prompt": "Focus on spring bulbs and early-blooming flowers",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["autumn", "spring"]
+    },
+    {
+      "id": 11,
+      "name": "Easter Egg Hunt",
+      "category": "ritual",
+      "keywords": ["discovery", "surprise", "hidden treasures", "joy"],
+      "meaning": "Hidden treasures await in the garden. Discover volunteer plants and surprises.",
+      "agent_prompt": "Encourage exploration and self-seeding varieties",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 12,
+      "name": "Eggshell Pots",
+      "category": "action",
+      "keywords": ["resourcefulness", "starting seeds", "calcium", "creativity"],
+      "meaning": "Use what you have. Simple containers hold great potential.",
+      "agent_prompt": "Suggest seeds perfect for starting in small containers",
+      "moon_affinity": ["new", "waxing_crescent"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 13,
+      "name": "Eostre",
+      "category": "ritual",
+      "keywords": ["goddess", "dawn", "fertility", "balance"],
+      "meaning": "The goddess of spring blesses your garden. Balance light and dark, growth and rest.",
+      "agent_prompt": "Focus on fertility and balanced garden planning",
+      "moon_affinity": ["full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 14,
+      "name": "Floromancy",
+      "category": "mystical",
+      "keywords": ["divination", "flowers", "messages", "intuition"],
+      "meaning": "Flowers speak in silent language. Listen to what your garden tells you.",
+      "agent_prompt": "Suggest flowers with symbolic meanings and divination uses",
+      "moon_affinity": ["full", "waxing_gibbous"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 15,
+      "name": "Flower Wand",
+      "category": "mystical",
+      "keywords": ["magic", "cutting garden", "beauty", "intention"],
+      "meaning": "Gather flowers for magic and beauty. Plant a cutting garden.",
+      "agent_prompt": "Focus on flowers good for cutting and arrangements",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 16,
+      "name": "Garden Party",
+      "category": "action",
+      "keywords": ["celebration", "sharing", "beauty", "joy"],
+      "meaning": "Celebrate the garden's abundance. Plant for beauty and entertainment.",
+      "agent_prompt": "Suggest ornamental plants and edibles perfect for entertaining",
+      "moon_affinity": ["full", "waxing_gibbous"],
+      "season_affinity": ["summer"]
+    },
+    {
+      "id": 17,
+      "name": "Germination",
+      "category": "action",
+      "keywords": ["beginning", "potential", "emergence", "patience"],
+      "meaning": "Life stirs beneath the soil. Trust in the process of emergence.",
+      "agent_prompt": "Focus on starting seeds and optimal germination conditions",
+      "moon_affinity": ["new", "waxing_crescent"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 18,
+      "name": "Grasshopper",
+      "category": "fauna",
+      "keywords": ["leap", "opportunity", "movement", "adaptation"],
+      "meaning": "Take a leap of faith. Try something new in your garden.",
+      "agent_prompt": "Suggest experimental varieties or new growing techniques",
+      "moon_affinity": ["first_quarter", "waxing_gibbous"],
+      "season_affinity": ["summer"]
+    },
+    {
+      "id": 19,
+      "name": "Hare",
+      "category": "fauna",
+      "keywords": ["fertility", "speed", "abundance", "moon"],
+      "meaning": "Swift growth and abundant fertility. Fast-maturing plants thrive now.",
+      "agent_prompt": "Focus on quick-growing varieties and succession planting",
+      "moon_affinity": ["full", "waxing_gibbous"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 20,
+      "name": "Hot Cross Buns",
+      "category": "mystical",
+      "keywords": ["tradition", "spices", "nourishment", "cross-quarter"],
+      "meaning": "Spiced traditions nourish body and soul. Plant herbs for baking.",
+      "agent_prompt": "Suggest culinary herbs and spices for baking",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 21,
+      "name": "Irish Moss",
+      "category": "flora",
+      "keywords": ["ground cover", "resilience", "protection", "luck"],
+      "meaning": "Low-growing resilience carpets the earth. Plant ground covers for protection.",
+      "agent_prompt": "Focus on ground covers and low-maintenance plants",
+      "moon_affinity": ["waning_crescent", "new"],
+      "season_affinity": ["spring", "autumn"]
+    },
+    {
+      "id": 22,
+      "name": "Jasmine",
+      "category": "flora",
+      "keywords": ["fragrance", "night", "romance", "moon"],
+      "meaning": "Night-blooming sweetness under the moon. Plant fragrant evening flowers.",
+      "agent_prompt": "Suggest fragrant flowers, especially night-blooming varieties",
+      "moon_affinity": ["full", "waxing_gibbous"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 23,
+      "name": "Lamb",
+      "category": "fauna",
+      "keywords": ["innocence", "new life", "gentleness", "spring"],
+      "meaning": "Gentle new beginnings. Tend your garden with soft hands.",
+      "agent_prompt": "Focus on gentle care and tender young plants",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 24,
+      "name": "Moon Milk",
+      "category": "mystical",
+      "keywords": ["lunar magic", "nourishment", "herbs", "ritual"],
+      "meaning": "Lunar nourishment for body and spirit. Harvest herbs under moonlight.",
+      "agent_prompt": "Suggest herbs for moon milk and lunar rituals",
+      "moon_affinity": ["full"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 25,
+      "name": "Mushrooms",
+      "category": "flora",
+      "keywords": ["decomposition", "mycelium", "network", "transformation"],
+      "meaning": "Hidden networks support all life. Nurture your soil's ecosystem.",
+      "agent_prompt": "Focus on soil health and plants that benefit from mycorrhizal relationships",
+      "moon_affinity": ["waning_crescent", "new"],
+      "season_affinity": ["autumn", "spring"]
+    },
+    {
+      "id": 26,
+      "name": "Ostercierbaum",
+      "category": "ritual",
+      "keywords": ["Easter egg tree", "decoration", "tradition", "beauty"],
+      "meaning": "Decorate branches with symbols of life. Create beauty from simple things.",
+      "agent_prompt": "Suggest ornamental branches and decorative plants",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 27,
+      "name": "Painted Eggs",
+      "category": "ritual",
+      "keywords": ["creativity", "colour", "tradition", "art"],
+      "meaning": "Colour and creativity bless your garden. Plant for vibrant beauty.",
+      "agent_prompt": "Focus on colourful flowers and vegetables",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 28,
+      "name": "Peach Moonstone",
+      "category": "celestial",
+      "keywords": ["feminine energy", "intuition", "nurturing", "cycles"],
+      "meaning": "Divine feminine energy nurtures growth. Trust your gardening intuition.",
+      "agent_prompt": "Suggest nurturing practices and intuitive planting",
+      "moon_affinity": ["full", "new"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 29,
+      "name": "Pink Moon",
+      "category": "celestial",
+      "keywords": ["April full moon", "wildflowers", "abundance", "color"],
+      "meaning": "The Pink Moon illuminates spring's wild abundance. Plant with the lunar cycle.",
+      "agent_prompt": "Focus on spring planting aligned with April full moon timing",
+      "moon_affinity": ["full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 30,
+      "name": "Plant Dyeing",
+      "category": "mystical",
+      "keywords": ["colour", "craft", "natural dyes", "creativity"],
+      "meaning": "Plants give their colour to cloth and craft. Grow for beauty beyond the garden.",
+      "agent_prompt": "Suggest plants good for natural dyeing",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["summer", "autumn"]
+    },
+    {
+      "id": 31,
+      "name": "Primrose",
+      "category": "flora",
+      "keywords": ["early spring", "delicate", "first flower", "hope"],
+      "meaning": "First flowers of spring bring hope. Plant early bloomers.",
+      "agent_prompt": "Focus on early spring flowers and cool-season plants",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 32,
+      "name": "Rainbow",
+      "category": "celestial",
+      "keywords": ["promise", "diversity", "colour", "hope"],
+      "meaning": "After rain comes colour and promise. Plant a diverse, colourful garden.",
+      "agent_prompt": "Suggest diverse varieties in multiple colours",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 33,
+      "name": "Robin",
+      "category": "fauna",
+      "keywords": ["spring messenger", "song", "earthworms", "renewal"],
+      "meaning": "The robin's song announces spring. Welcome beneficial birds to your garden.",
+      "agent_prompt": "Focus on plants that attract beneficial birds and support soil health",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 34,
+      "name": "Sacred Circle",
+      "category": "ritual",
+      "keywords": ["ceremony", "protection", "intention", "wholeness"],
+      "meaning": "Create sacred space in your garden. Plant in circles for protection and intention.",
+      "agent_prompt": "Suggest circular planting patterns and protective plants",
+      "moon_affinity": ["full", "new"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 35,
+      "name": "Seed Blessing",
+      "category": "ritual",
+      "keywords": ["intention", "prayer", "beginning", "sacred"],
+      "meaning": "Bless your seeds before planting. Infuse them with intention and love.",
+      "agent_prompt": "Focus on starting new seeds with mindful intention",
+      "moon_affinity": ["new", "waxing_crescent"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 36,
+      "name": "Shortbread",
+      "category": "mystical",
+      "keywords": ["tradition", "butter", "simple pleasures", "nourishment"],
+      "meaning": "Simple ingredients create lasting joy. Plant herbs for traditional recipes.",
+      "agent_prompt": "Suggest culinary herbs for baking and traditional recipes",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 37,
+      "name": "Simmer Pot",
+      "category": "mystical",
+      "keywords": ["aromatics", "herbs", "home", "warmth"],
+      "meaning": "Fill your home with garden scents. Grow herbs for simmer pots.",
+      "agent_prompt": "Focus on aromatic herbs and citrus for simmer pots",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["autumn", "winter"]
+    },
+    {
+      "id": 38,
+      "name": "Spring Cleaning",
+      "category": "action",
+      "keywords": ["clearing", "preparation", "fresh start", "organization"],
+      "meaning": "Clear away the old to make space for new growth. Prepare your garden beds.",
+      "agent_prompt": "Focus on garden maintenance and bed preparation",
+      "moon_affinity": ["waning_crescent", "new"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 39,
+      "name": "Spring Equinox",
+      "category": "celestial",
+      "keywords": ["balance", "equal day and night", "renewal", "planting"],
+      "meaning": "Day and night balance perfectly. Plant with the turning of the wheel.",
+      "agent_prompt": "Focus on spring planting aligned with equinox timing",
+      "moon_affinity": ["new", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 40,
+      "name": "Spring Hike",
+      "category": "ritual",
+      "keywords": ["nature", "foraging", "observation", "connection"],
+      "meaning": "Walk in wild places. Observe what nature plants and learn from her.",
+      "agent_prompt": "Suggest native plants and foraging opportunities",
+      "moon_affinity": ["waxing_crescent", "first_quarter"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 41,
+      "name": "Spring Rain",
+      "category": "celestial",
+      "keywords": ["water", "nourishment", "growth", "blessing"],
+      "meaning": "Rain blesses the earth. Plant water-loving varieties and trust in nature's timing.",
+      "agent_prompt": "Focus on moisture-loving plants and optimal watering",
+      "moon_affinity": ["waxing_crescent", "first_quarter", "full"],
+      "season_affinity": ["spring"]
+    },
+    {
+      "id": 42,
+      "name": "Tea Party",
+      "category": "action",
+      "keywords": ["herbs", "gathering", "ritual", "sharing"],
+      "meaning": "Gather herbs for tea and conversation. Plant a tea garden.",
+      "agent_prompt": "Suggest herbs perfect for tea blends",
+      "moon_affinity": ["waxing_gibbous", "full"],
+      "season_affinity": ["spring", "summer"]
+    },
+    {
+      "id": 43,
+      "name": "Terrarium",
+      "category": "action",
+      "keywords": ["miniature", "contained", "ecosystem", "creativity"],
+      "meaning": "Create a world in miniature. Small spaces hold great beauty.",
+      "agent_prompt": "Suggest plants suitable for terrariums and small containers",
+      "moon_affinity": ["new", "waxing_crescent"],
+      "season_affinity": ["all"]
+    },
+    {
+      "id": 44,
+      "name": "Wreath Making",
+      "category": "action",
+      "keywords": ["circle", "decoration", "harvest", "creativity"],
+      "meaning": "Weave the garden's gifts into circles of beauty. Plant for crafting.",
+      "agent_prompt": "Focus on plants with good stems for wreath-making and dried arrangements",
+      "moon_affinity": ["waning_gibbous", "full"],
+      "season_affinity": ["autumn", "winter"]
+    }
+  ],
+  "moon_phases": {
+    "new": "New beginnings, planting seeds, setting intentions",
+    "waxing_crescent": "Growth, expansion, building energy",
+    "first_quarter": "Action, decision, overcoming obstacles",
+    "waxing_gibbous": "Refinement, patience, nearly complete",
+    "full": "Harvest, culmination, celebration, maximum energy",
+    "waning_gibbous": "Gratitude, sharing, teaching",
+    "last_quarter": "Release, letting go, composting",
+    "waning_crescent": "Rest, reflection, preparation for new cycle"
+  }
+}

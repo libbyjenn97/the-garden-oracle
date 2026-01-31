@@ -1,0 +1,256 @@
+/* Calendar Page Styles */
+
+.calendar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 20px 40px;
+}
+
+.calendar-header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(245, 241, 232, 0.7);
+    border-radius: 20px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(212, 175, 106, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header h1 {
+    font-size: 2.5em;
+    background: linear-gradient(45deg, var(--olive-green), var(--sage-green), var(--warm-gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+}
+
+/* Month Navigation */
+.month-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(245, 241, 232, 0.7);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.month-navigation h2 {
+    font-size: 2em;
+    color: var(--olive-green);
+}
+
+.nav-button {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, var(--warm-gold), var(--warm-terracotta));
+    color: var(--cream);
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Georgia', serif;
+    box-shadow: 0 4px 12px rgba(212, 175, 106, 0.3);
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(212, 175, 106, 0.5);
+}
+
+/* Calendar Grid */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.calendar-day {
+    background: rgba(245, 241, 232, 0.8);
+    border: 2px solid rgba(139, 157, 131, 0.3);
+    border-radius: 12px;
+    padding: 15px;
+    min-height: 150px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.calendar-day:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-color: var(--warm-gold);
+}
+
+.calendar-day.empty {
+    background: transparent;
+    border: none;
+}
+
+.calendar-day.today {
+    border: 3px solid var(--warm-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 106, 0.4);
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(139, 157, 131, 0.2);
+}
+
+.day-number {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--olive-green);
+}
+
+.moon-icon {
+    font-size: 1.5em;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.day-name {
+    font-size: 1.1em;
+    color: var(--olive-green);
+    font-weight: bold;
+    text-align: center;
+    padding: 15px;
+    background: rgba(139, 157, 131, 0.2);
+    border-radius: 8px;
+}
+
+.day-tasks {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: var(--olive-green);
+}
+
+.task-item {
+    margin: 8px 0;
+    padding: 8px;
+    background: rgba(184, 212, 197, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid var(--sage-green);
+}
+
+/* Moon Phase Colors */
+.calendar-day.new-moon {
+    background: linear-gradient(135deg, rgba(197, 184, 212, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.waxing-crescent {
+    background: linear-gradient(135deg, rgba(184, 212, 197, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.first-quarter {
+    background: linear-gradient(135deg, rgba(212, 175, 106, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.waxing-gibbous {
+    background: linear-gradient(135deg, rgba(244, 212, 186, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.full-moon {
+    background: linear-gradient(135deg, rgba(212, 175, 106, 0.4), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.waning-gibbous {
+    background: linear-gradient(135deg, rgba(201, 169, 163, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.last-quarter {
+    background: linear-gradient(135deg, rgba(139, 157, 131, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+.calendar-day.waning-crescent {
+    background: linear-gradient(135deg, rgba(184, 197, 214, 0.3), rgba(245, 241, 232, 0.8));
+}
+
+/* Legend */
+.calendar-legend {
+    background: rgba(245, 241, 232, 0.8);
+    border: 2px solid var(--warm-gold);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+}
+
+.calendar-legend h3 {
+    font-size: 1.8em;
+    color: var(--olive-green);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.legend-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+    background: rgba(212, 175, 106, 0.2);
+    transform: translateX(5px);
+}
+
+.legend-icon {
+    font-size: 1.8em;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .calendar-grid {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px;
+    }
+    
+    .calendar-day {
+        min-height: 120px;
+        padding: 10px;
+    }
+    
+    .day-tasks {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .calendar-day {
+        min-height: auto;
+    }
+    
+    .month-navigation {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .legend-items {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Made with Bob */

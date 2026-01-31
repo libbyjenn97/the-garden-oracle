@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garden Weather Oracle 🌙</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <nav class="hamburger-menu">
+        <button id="menuToggle" class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div id="menuDropdown" class="menu-dropdown hidden">
+            <a href="index.html" class="menu-item">🔮 Oracle Cards</a>
+            <a href="calendar.html" class="menu-item">🌙 Lunar Calendar</a>
+            <a href="seeds.html" class="menu-item">🌱 My Seeds</a>
+            <a href="spread.html" class="menu-item">✨ Planting Spread</a>
+            <a href="about.html" class="menu-item">ℹ️ About</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>🌱 Garden Weather Oracle 🌙</h1>
+            <p class="subtitle">Mystical Guidance for Your Garden</p>
+        </header>
+
+        <!-- Moon Display Section -->
+        <section class="moon-section">
+            <div class="moon-container">
+                <canvas id="moonCanvas" width="300" height="300"></canvas>
+                <div class="moon-info">
+                    <h2 id="moonPhase">Waxing Crescent</h2>
+                    <p id="moonDescription">Growth and expansion</p>
+                    <p id="moonDate"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Oracle Card Section -->
+        <section class="oracle-section">
+            <div class="card-container">
+                <div id="cardBack" class="card card-back">
+                    <div class="card-pattern">🌿</div>
+                    <p>Draw Your Oracle</p>
+                </div>
+                <div id="cardFront" class="card card-front hidden">
+                    <div class="card-content">
+                        <div class="card-image-placeholder">
+                            <div class="card-illustration"></div>
+                        </div>
+                        <h2 id="cardName" class="card-title"></h2>
+                        <div class="card-number-divider">
+                            <span class="divider-ornament">✦</span>
+                            <span id="cardNumber" class="card-number">+ 1 +</span>
+                            <span class="divider-ornament">✦</span>
+                        </div>
+                        <p id="cardMeaning" class="card-meaning"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="drawButton" class="draw-button">
+                ✨ Draw Oracle Card ✨
+            </button>
+            
+            <div id="reading" class="reading hidden">
+                <h3>🌙 Your Garden Fortune 🌙</h3>
+                <p id="readingText"></p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>🌸 May your garden flourish under moon and sun 🌸</p>
+        </footer>
+    </div>
+
+    <script src="js/moon.js"></script>
+    <script src="js/illustrations.js"></script>
+    <script src="js/cards.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

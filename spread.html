@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Planting Spread - Garden Weather Oracle</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/spread.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <nav class="hamburger-menu">
+        <button id="menuToggle" class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div id="menuDropdown" class="menu-dropdown hidden">
+            <a href="index.html" class="menu-item">🔮 Oracle Cards</a>
+            <a href="calendar.html" class="menu-item">🌙 Lunar Calendar</a>
+            <a href="seeds.html" class="menu-item">🌱 My Seeds</a>
+            <a href="spread.html" class="menu-item">✨ Planting Spread</a>
+        </div>
+    </nav>
+
+    <div class="spread-container">
+        <header class="spread-header">
+            <h1>✨ My Planting Spread</h1>
+            <p class="subtitle">Your mystical seed selection</p>
+        </header>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state">
+            <p>🌾 No seeds selected yet</p>
+            <p class="empty-hint">Go to <a href="seeds.html">My Seeds</a> and click on seeds to add them to your spread</p>
+        </div>
+
+        <!-- Spread Display -->
+        <div id="spreadDisplay" class="spread-display" style="display: none;">
+            <div class="spread-info">
+                <p id="spreadCount" class="spread-count"></p>
+                <button id="clearSpreadButton" class="clear-spread-button">🗑️ Clear Spread</button>
+            </div>
+
+            <div id="spreadGrid" class="spread-grid">
+                <!-- Seed cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/spread.js"></script>
+</body>
+</html>

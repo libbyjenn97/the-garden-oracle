@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Seeds - Garden Weather Oracle</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/seeds.css">
+</head>
+<body>
+    <!-- Hamburger Menu -->
+    <nav class="hamburger-menu">
+        <button id="menuToggle" class="menu-toggle" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div id="menuDropdown" class="menu-dropdown hidden">
+            <a href="index.html" class="menu-item">🔮 Oracle Cards</a>
+            <a href="calendar.html" class="menu-item">🌙 Lunar Calendar</a>
+            <a href="seeds.html" class="menu-item">🌱 My Seeds</a>
+        </div>
+    </nav>
+
+    <div class="seeds-container">
+        <header class="seeds-header">
+            <h1>🌱 My Seed Collection</h1>
+            <p class="subtitle">Your personal garden inventory from Notion</p>
+            <div id="currentConditions" class="current-conditions" style="display: none;">
+                <span id="currentMoonPhase" class="condition-badge"></span>
+                <span id="currentSeason" class="condition-badge"></span>
+            </div>
+        </header>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading your seeds from Notion...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="error-state" style="display: none;">
+            <p class="error-message">❌ <span id="errorMessage"></span></p>
+            <button id="retryButton" class="retry-button">🔄 Retry</button>
+        </div>
+
+        <!-- Controls -->
+        <div id="seedsControls" class="seeds-controls" style="display: none;">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="🔍 Search seeds..." />
+            </div>
+            
+            <div class="filters">
+                <select id="typeFilter">
+                    <option value="">All Types</option>
+                </select>
+                
+                <select id="monthFilter">
+                    <option value="">All Months</option>
+                    <option value="January">January</option>
+                    <option value="February">February</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+                
+                <select id="moonPhaseFilter">
+                    <option value="">All Moon Phases</option>
+                    <option value="New Moon (Waxing)">🌑 New Moon (Waxing)</option>
+                    <option value="Waxing Crescent">🌒 Waxing Crescent</option>
+                    <option value="First Quarter Half Moon (Waxing)">🌓 First Quarter Half Moon (Waxing)</option>
+                    <option value="Waxing Gibbous">🌔 Waxing Gibbous</option>
+                    <option value="Full Moon (Waning)">🌕 Full Moon (Waning)</option>
+                    <option value="Waning Gibbous">🌖 Waning Gibbous</option>
+                </select>
+
+                <button id="filterCurrentButton" class="filter-button">🌙 Filter by Current</button>
+                <button id="clearFiltersButton" class="clear-button">✖️ Clear Filters</button>
+                <button id="refreshButton" class="refresh-button">🔄 Refresh</button>
+            </div>
+
+            <div class="stats">
+                <span id="seedCount" class="stat-item">0 seeds</span>
+                <span id="cacheInfo" class="stat-item"></span>
+                <span id="selectionCounter" class="stat-item selection-counter" style="display: none;">0 selected</span>
+            </div>
+
+            <div class="selection-actions" id="selectionActions" style="display: none;">
+                <p class="selection-hint">✨ Click seeds to add them to your planting spread</p>
+                <button id="viewSpreadButton" class="view-spread-button">🌱 View My Planting Spread</button>
+                <button id="clearSelectionButton" class="clear-selection-button">Clear Selection</button>
+            </div>
+        </div>
+
+        <!-- Seeds Grid -->
+        <div id="seedsGrid" class="seeds-grid" style="display: none;">
+            <!-- Seeds will be dynamically inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <p>🌾 No seeds found matching your filters</p>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/notion-client.js"></script>
+    <script src="js/seeds.js"></script>
+</body>
+</html>

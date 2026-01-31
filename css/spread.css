@@ -1,0 +1,339 @@
+/**
+ * Planting Spread Page Styles
+ * Tarot-like card display for selected seeds
+ */
+
+.spread-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 20px 40px;
+}
+
+.spread-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.spread-header h1 {
+    font-size: 2.5rem;
+    color: var(--sage-green);
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.spread-header .subtitle {
+    font-size: 1.1rem;
+    color: var(--warm-gold);
+    font-style: italic;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state p {
+    font-size: 1.3rem;
+    color: var(--sage-green);
+    margin-bottom: 15px;
+}
+
+.empty-hint {
+    font-size: 1rem !important;
+    color: #666;
+}
+
+.empty-hint a {
+    color: var(--warm-gold);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.empty-hint a:hover {
+    text-decoration: underline;
+}
+
+/* Spread Info */
+.spread-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.spread-count {
+    font-size: 1.2rem;
+    color: var(--sage-green);
+    font-weight: 600;
+}
+
+.add-to-deck-button,
+.clear-spread-button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.add-to-deck-button {
+    background: linear-gradient(135deg, var(--sage-green), var(--mint));
+    color: white;
+}
+
+.clear-spread-button {
+    background: #ddd;
+    color: #666;
+}
+
+.add-to-deck-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.clear-spread-button:hover {
+    background: #ccc;
+}
+
+/* Spread Grid - Tarot-like Layout */
+.spread-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    perspective: 1000px;
+}
+
+.spread-card {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    transition: all 0.5s ease;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    border: 3px solid var(--warm-gold);
+}
+
+.spread-card:hover {
+    transform: translateY(-10px) rotateY(5deg);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3);
+}
+
+.spread-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--sage-green), var(--warm-gold), var(--lavender));
+    border-radius: 20px 20px 0 0;
+}
+
+.spread-card-header {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--cream);
+}
+
+.spread-card-name {
+    font-size: 1.4rem;
+    color: var(--sage-green);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.spread-card-variety {
+    font-size: 1rem;
+    color: var(--warm-gold);
+    font-style: italic;
+}
+
+.spread-card-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.spread-card-section {
+    margin-top: 12px;
+    margin-bottom: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--cream);
+    color: var(--warm-gold);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.spread-card-section:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+}
+
+.spread-card-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+.spread-card-detail-label {
+    font-weight: 600;
+    color: var(--sage-green);
+    min-width: 100px;
+    flex-shrink: 0;
+}
+
+.spread-card-detail span:last-child {
+    flex: 1;
+}
+
+.spread-card-moon {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    background: linear-gradient(135deg, var(--lavender), var(--mint));
+    color: white;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.spread-card-remove {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 30px;
+    height: 30px;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.spread-card:hover .spread-card-remove {
+    opacity: 1;
+}
+
+.spread-card-remove:hover {
+    transform: scale(1.1);
+    background: #ff5252;
+}
+
+/* Success Message */
+.success-message {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, var(--sage-green), var(--mint));
+    border-radius: 20px;
+    margin-top: 30px;
+    animation: slideIn 0.5s ease;
+}
+
+.success-message p {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.view-deck-button {
+    padding: 15px 40px;
+    background: white;
+    color: var(--sage-green);
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-deck-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.spread-card {
+    animation: cardAppear 0.6s ease forwards;
+    opacity: 0;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) rotateX(-15deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+    }
+}
+
+.spread-card:nth-child(1) { animation-delay: 0.1s; }
+.spread-card:nth-child(2) { animation-delay: 0.2s; }
+.spread-card:nth-child(3) { animation-delay: 0.3s; }
+.spread-card:nth-child(4) { animation-delay: 0.4s; }
+.spread-card:nth-child(5) { animation-delay: 0.5s; }
+.spread-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .spread-container {
+        padding: 70px 15px 30px;
+    }
+
+    .spread-header h1 {
+        font-size: 2rem;
+    }
+
+    .spread-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .spread-info {
+        flex-direction: column;
+    }
+}
+
+/* Made with Bob */
