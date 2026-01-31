@@ -44,8 +44,8 @@ jobs:
       - name: Deploy to Code Engine with source build
         run: |
           # Check if app exists
-          if ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} &>/dev/null; then
-            echo "Updating existing application..."
+          if ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} --output json 2>/dev/null | jq -e '.name' > /dev/null; then
+            echo "Application exists, updating..."
             ibmcloud ce app update \
               --name ${{ env.CODE_ENGINE_APP }} \
               --build-source . \
@@ -60,7 +60,7 @@ jobs:
               --port 8080 \
               --wait
           else
-            echo "Creating new application..."
+            echo "Application doesn't exist, creating..."
             ibmcloud ce app create \
               --name ${{ env.CODE_ENGINE_APP }} \
               --build-source . \
