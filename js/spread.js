@@ -97,31 +97,36 @@ class PlantingSpread {
         const card = document.createElement('div');
         card.className = 'spread-card';
 
-        // Extract all fields with multiple possible names
+        // Extract all fields - matching seeds.js field names
         const name = seed.Name || seed.name || 'Unknown';
         const variety = seed.Variety || seed.variety || '';
         const type = seed.Type || seed['Plant Type'] || seed.type || '';
-        const moonPhase = seed['Ideal Moon Phase'] || seed['Moon Phase'] || '';
         
         // Classification fields
-        const cropClass = seed['Above ground crop / Root Crop'] || '';
-        const lifecycle = seed['Annual / Perennial'] || '';
+        const crop = seed.Crop || seed['Above ground crop / Root Crop'] || seed.crop || '';
+        const lifecycle = seed.Lifecycle || seed['Annual / Perennial'] || seed.lifecycle || '';
         
         // Timing fields
-        const plantMonth = seed['Plant Month'] || [];
-        const seasons = seed['Season(s)'] || [];
-        const daysToGerminate = seed['Days to Germination (Max)'] || seed['Days to Germinate'] || '';
+        const plantMonths = seed['Plant Months'] || seed['Plant Month'] || seed.Month || seed.month || '';
+        const seasons = seed.Seasons || seed['Season(s)'] || seed['Planting Season'] || seed.Season || seed.season || '';
+        const harvest = seed.Harvest || seed['Days to Harvest'] || seed.daysToHarvest || '';
         const harvestMin = seed['Harvest Min (weeks)'] || '';
         const harvestMax = seed['Harvest Max (weeks)'] || '';
         
-        // Status fields
-        const state = seed.State || [];
-        const rating = seed.Rating || '';
-        
-        // Location & conditions
-        const sowLocation = seed['Sow Location'] || [];
+        // Growing Conditions
+        const sow = seed.Sow || seed['Sow Location'] || seed.sow || '';
+        const soilTemp = seed['Soil Temp'] || seed.soilTemp || '';
         const soilTempMin = seed['Soil Temperature (Min)'] || '';
         const soilTempMax = seed['Soil Temperature (Max)'] || '';
+        const spacing = seed.Spacing || seed.spacing || '';
+        const depth = seed.Depth || seed['Planting Depth'] || seed.depth || '';
+        const sunlight = seed.Sunlight || seed.sunlight || '';
+        const waterNeeds = seed['Water Needs'] || seed.waterNeeds || '';
+        
+        // Status fields
+        const state = seed.State || seed.state || seed.Status || seed.status || '';
+        const quantity = seed.Quantity || seed.quantity || '';
+        const rating = seed.Rating || '';
 
         // Helper function to format arrays
         const formatArray = (arr) => {
@@ -130,9 +135,6 @@ class PlantingSpread {
             }
             return arr || '';
         };
-
-        // Get moon phase display
-        const moonPhaseDisplay = formatArray(moonPhase);
 
         let html = `
             <button class="spread-card-remove" data-index="${index}">×</button>
@@ -144,7 +146,7 @@ class PlantingSpread {
         `;
 
         // Classification section
-        if (type || cropClass || lifecycle) {
+        if (type || crop || lifecycle) {
             html += '<div class="spread-card-section"><strong>Classification</strong></div>';
             
             if (type) {
@@ -154,47 +156,45 @@ class PlantingSpread {
                 </div>`;
             }
             
-            if (cropClass) {
+            if (crop) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">Crop:</span>
-                    <span>${this.escapeHtml(cropClass)}</span>
+                    <span>${this.escapeHtml(String(crop))}</span>
                 </div>`;
             }
             
             if (lifecycle) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">Lifecycle:</span>
-                    <span>${this.escapeHtml(lifecycle)}</span>
+                    <span>${this.escapeHtml(String(lifecycle))}</span>
                 </div>`;
             }
         }
 
         // Timing section
-        if (plantMonth.length > 0 || seasons.length > 0 || daysToGerminate || harvestMin || harvestMax) {
+        if (plantMonths || seasons || harvest || harvestMin || harvestMax) {
             html += '<div class="spread-card-section"><strong>Timing</strong></div>';
             
-            if (plantMonth.length > 0) {
+            if (plantMonths) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">Plant Months:</span>
-                    <span>${this.escapeHtml(formatArray(plantMonth))}</span>
+                    <span>${this.escapeHtml(String(plantMonths))}</span>
                 </div>`;
             }
             
-            if (seasons.length > 0) {
+            if (seasons) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">Seasons:</span>
-                    <span>${this.escapeHtml(formatArray(seasons))}</span>
+                    <span>${this.escapeHtml(String(seasons))}</span>
                 </div>`;
             }
             
-            if (daysToGerminate) {
+            if (harvest) {
                 html += `<div class="spread-card-detail">
-                    <span class="spread-card-detail-label">Germination:</span>
-                    <span>${this.escapeHtml(String(daysToGerminate))} days</span>
+                    <span class="spread-card-detail-label">Harvest:</span>
+                    <span>${this.escapeHtml(String(harvest))}</span>
                 </div>`;
-            }
-            
-            if (harvestMin || harvestMax) {
+            } else if (harvestMin || harvestMax) {
                 const harvestRange = harvestMin && harvestMax ?
                     `${harvestMin}-${harvestMax} weeks` :
                     (harvestMin ? `${harvestMin}+ weeks` : `${harvestMax} weeks`);
@@ -206,17 +206,22 @@ class PlantingSpread {
         }
 
         // Growing conditions section
-        if (sowLocation.length > 0 || soilTempMin || soilTempMax) {
+        if (sow || soilTemp || soilTempMin || soilTempMax || spacing || depth || sunlight || waterNeeds) {
             html += '<div class="spread-card-section"><strong>Growing Conditions</strong></div>';
             
-            if (sowLocation.length > 0) {
+            if (sow) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">Sow:</span>
-                    <span>${this.escapeHtml(formatArray(sowLocation))}</span>
+                    <span>${this.escapeHtml(String(sow))}</span>
                 </div>`;
             }
             
-            if (soilTempMin || soilTempMax) {
+            if (soilTemp) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Soil Temp:</span>
+                    <span>${this.escapeHtml(String(soilTemp))}</span>
+                </div>`;
+            } else if (soilTempMin || soilTempMax) {
                 const tempRange = soilTempMin && soilTempMax ?
                     `${soilTempMin}-${soilTempMax}°C` :
                     (soilTempMin ? `${soilTempMin}°C+` : `up to ${soilTempMax}°C`);
@@ -225,16 +230,51 @@ class PlantingSpread {
                     <span>${this.escapeHtml(tempRange)}</span>
                 </div>`;
             }
+            
+            if (spacing) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Spacing:</span>
+                    <span>${this.escapeHtml(String(spacing))}</span>
+                </div>`;
+            }
+            
+            if (depth) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Depth:</span>
+                    <span>${this.escapeHtml(String(depth))}</span>
+                </div>`;
+            }
+            
+            if (sunlight) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Sunlight:</span>
+                    <span>${this.escapeHtml(String(sunlight))}</span>
+                </div>`;
+            }
+            
+            if (waterNeeds) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Water:</span>
+                    <span>${this.escapeHtml(String(waterNeeds))}</span>
+                </div>`;
+            }
         }
 
         // Status section
-        if (state.length > 0 || rating) {
+        if (state || quantity || rating) {
             html += '<div class="spread-card-section"><strong>Status</strong></div>';
             
-            if (state.length > 0) {
+            if (state) {
                 html += `<div class="spread-card-detail">
                     <span class="spread-card-detail-label">State:</span>
-                    <span>${this.escapeHtml(formatArray(state))}</span>
+                    <span>${this.escapeHtml(String(state))}</span>
+                </div>`;
+            }
+            
+            if (quantity) {
+                html += `<div class="spread-card-detail">
+                    <span class="spread-card-detail-label">Quantity:</span>
+                    <span>${this.escapeHtml(String(quantity))}</span>
                 </div>`;
             }
             
@@ -250,11 +290,6 @@ class PlantingSpread {
         }
 
         html += '</div>';
-
-        if (moonPhaseDisplay) {
-            const moonIcon = this.getMoonIcon(moonPhaseDisplay);
-            html += `<div class="spread-card-moon">${moonIcon} ${this.escapeHtml(moonPhaseDisplay)}</div>`;
-        }
 
         card.innerHTML = html;
 

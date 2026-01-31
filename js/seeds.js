@@ -409,36 +409,66 @@ class SeedsPage {
         const card = document.createElement('div');
         card.className = 'seed-card';
         card.dataset.seedId = seed.id;
-        
-        // Add click handler for selection
-        card.addEventListener('click', (e) => {
-            // Don't toggle if clicking a link or button
-            if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON') {
-                return;
-            }
-            this.toggleSeedSelection(seed);
-        });
 
-        // Extract seed properties (handle different property names)
+        // Debug: Log all available fields for first seed
+        if (!this._debugLogged) {
+            console.log('Available seed fields:', Object.keys(seed));
+            console.log('Sample seed data:', seed);
+            this._debugLogged = true;
+        }
+
+        // Extract all seed properties - using exact Notion field names
         const name = seed.Name || seed.name || 'Unknown';
         const variety = seed.Variety || seed.variety || '';
+        
+        // Classification
         const type = seed.Type || seed['Plant Type'] || seed.type || '';
-        const season = seed['Planting Season'] || seed.Season || seed.season || '';
-        const moonPhase = seed['Ideal Moon Phase'] || seed['Moon Phase'] || seed['Best Moon Phase'] || seed.moonPhase || '';
+        const crop = seed['Above ground crop / Root Crop'] || seed.Crop || seed.crop || '';
+        const lifecycle = seed['Annual / Perennial'] || seed.Lifecycle || seed.lifecycle || '';
+        
+        // Timing
+        const plantMonth = seed['Plant Month'] || seed['Planting Month'] || seed.Month || seed.month || [];
+        const seasons = seed['Season(s)'] || seed.Seasons || seed['Planting Season'] || seed.Season || seed.season || [];
+        const daysToGerminate = seed['Days to Germination (Max)'] || seed['Days to Germinate'] || seed.daysToGerminate || '';
+        const harvestMin = seed['Harvest Min (weeks)'] || '';
+        const harvestMax = seed['Harvest Max (weeks)'] || '';
+        const harvest = seed.Harvest || seed['Days to Harvest'] || seed.daysToHarvest || '';
+        
+        // Growing Conditions
+        const sowLocation = seed['Sow Location'] || seed.Sow || seed.sow || [];
+        const soilTempMin = seed['Soil Temperature (Min)'] || '';
+        const soilTempMax = seed['Soil Temperature (Max)'] || '';
+        const soilTemp = seed['Soil Temp'] || seed.soilTemp || '';
+        const spacing = seed.Spacing || seed.spacing || '';
+        const depth = seed.Depth || seed['Planting Depth'] || seed.depth || '';
+        const sunlight = seed.Sunlight || seed.sunlight || '';
+        const waterNeeds = seed['Water Needs'] || seed.waterNeeds || '';
+        
+        // Status
+        const state = seed.State || seed.state || seed.Status || seed.status || [];
         const quantity = seed.Quantity || seed.quantity || '';
         const notes = seed.Notes || seed.notes || '';
-        const daysToGerminate = seed['Days to Germinate'] || seed.daysToGerminate || '';
-        const daysToHarvest = seed['Days to Harvest'] || seed.daysToHarvest || '';
+        
+        // Helper function to format arrays
+        const formatArray = (arr) => {
+            if (Array.isArray(arr)) {
+                return arr.join(', ');
+            }
+            return arr || '';
+        };
 
-        // Build card HTML
+        // Build card HTML - Always visible header
         let html = `
             <div class="seed-card-header">
                 <div class="seed-name">${this.escapeHtml(name)}</div>
                 ${variety ? `<div class="seed-variety">${this.escapeHtml(variety)}</div>` : ''}
             </div>
-            <div class="seed-details">
         `;
 
+        // Always visible: Classification section
+        html += '<div class="seed-section">';
+        html += '<div class="seed-section-title">Classification</div>';
+        
         if (type) {
             html += `
                 <div class="seed-detail">
@@ -447,16 +477,52 @@ class SeedsPage {
                 </div>
             `;
         }
-
-        if (quantity) {
+        
+        if (crop) {
             html += `
                 <div class="seed-detail">
-                    <span class="seed-detail-label">Quantity:</span>
-                    <span>${this.escapeHtml(String(quantity))}</span>
+                    <span class="seed-detail-label">Crop:</span>
+                    <span>${this.escapeHtml(formatArray(crop))}</span>
                 </div>
             `;
         }
+        
+        if (lifecycle) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Lifecycle:</span>
+                    <span>${this.escapeHtml(formatArray(lifecycle))}</span>
+                </div>
+            `;
+        }
+        
+        html += '</div>';
 
+        // Expandable sections
+        html += '<div class="seed-details-expanded" style="display: none;">';
+
+        // Timing section
+        html += '<div class="seed-section">';
+        html += '<div class="seed-section-title">Timing</div>';
+        
+        if (plantMonth && (Array.isArray(plantMonth) ? plantMonth.length > 0 : plantMonth)) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Plant Months:</span>
+                    <span>${this.escapeHtml(formatArray(plantMonth))}</span>
+                </div>
+            `;
+        }
+        
+        if (seasons && (Array.isArray(seasons) ? seasons.length > 0 : seasons)) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Seasons:</span>
+                    <span>${this.escapeHtml(formatArray(seasons))}</span>
+                </div>
+            `;
+        }
+        
         if (daysToGerminate) {
             html += `
                 <div class="seed-detail">
@@ -465,43 +531,173 @@ class SeedsPage {
                 </div>
             `;
         }
-
-        if (daysToHarvest) {
+        
+        if (harvest) {
             html += `
                 <div class="seed-detail">
                     <span class="seed-detail-label">Harvest:</span>
-                    <span>${this.escapeHtml(String(daysToHarvest))} days</span>
+                    <span>${this.escapeHtml(String(harvest))}</span>
+                </div>
+            `;
+        } else if (harvestMin || harvestMax) {
+            const harvestRange = harvestMin && harvestMax ?
+                `${harvestMin}-${harvestMax} weeks` :
+                (harvestMin ? `${harvestMin}+ weeks` : `${harvestMax} weeks`);
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Harvest:</span>
+                    <span>${this.escapeHtml(harvestRange)}</span>
                 </div>
             `;
         }
-
+        
         html += '</div>';
 
-        // Add tags
-        const tags = [];
-        if (season) tags.push(season);
+        // Growing Conditions section
+        html += '<div class="seed-section">';
+        html += '<div class="seed-section-title">Growing Conditions</div>';
         
-        if (tags.length > 0 || moonPhase) {
-            html += '<div class="seed-tags">';
-            
-            tags.forEach(tag => {
-                html += `<span class="seed-tag">${this.escapeHtml(tag)}</span>`;
-            });
-            
-            if (moonPhase) {
-                const moonIcon = this.getMoonIcon(moonPhase);
-                html += `<span class="seed-moon-phase">${moonIcon} ${this.escapeHtml(moonPhase)}</span>`;
-            }
-            
-            html += '</div>';
+        if (sowLocation && (Array.isArray(sowLocation) ? sowLocation.length > 0 : sowLocation)) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Sow:</span>
+                    <span>${this.escapeHtml(formatArray(sowLocation))}</span>
+                </div>
+            `;
         }
+        
+        if (soilTemp) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Soil Temp:</span>
+                    <span>${this.escapeHtml(String(soilTemp))}</span>
+                </div>
+            `;
+        } else if (soilTempMin || soilTempMax) {
+            const tempRange = soilTempMin && soilTempMax ?
+                `${soilTempMin}-${soilTempMax}°C` :
+                (soilTempMin ? `${soilTempMin}°C+` : `up to ${soilTempMax}°C`);
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Soil Temp:</span>
+                    <span>${this.escapeHtml(tempRange)}</span>
+                </div>
+            `;
+        }
+        
+        if (spacing) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Spacing:</span>
+                    <span>${this.escapeHtml(String(spacing))}</span>
+                </div>
+            `;
+        }
+        
+        if (depth) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Depth:</span>
+                    <span>${this.escapeHtml(String(depth))}</span>
+                </div>
+            `;
+        }
+        
+        if (sunlight) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Sunlight:</span>
+                    <span>${this.escapeHtml(String(sunlight))}</span>
+                </div>
+            `;
+        }
+        
+        if (waterNeeds) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Water:</span>
+                    <span>${this.escapeHtml(String(waterNeeds))}</span>
+                </div>
+            `;
+        }
+        
+        html += '</div>';
 
-        // Add notes
+        // Status section
+        html += '<div class="seed-section">';
+        html += '<div class="seed-section-title">Status</div>';
+        
+        if (state && (Array.isArray(state) ? state.length > 0 : state)) {
+            const stateStr = formatArray(state);
+            const stateClass = stateStr.toLowerCase().replace(/\s+/g, '-');
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">State:</span>
+                    <span class="seed-status ${stateClass}">${this.escapeHtml(stateStr)}</span>
+                </div>
+            `;
+        }
+        
+        if (quantity) {
+            html += `
+                <div class="seed-detail">
+                    <span class="seed-detail-label">Quantity:</span>
+                    <span>${this.escapeHtml(String(quantity))}</span>
+                </div>
+            `;
+        }
+        
+        html += '</div>';
+
+        // Notes
         if (notes) {
             html += `<div class="seed-notes">${this.escapeHtml(notes)}</div>`;
         }
 
+        html += '</div>'; // Close expanded section
+
+        // Expand/collapse button
+        html += `
+            <button class="seed-expand-btn">
+                <span class="expand-text">Show More</span>
+                <span class="expand-icon">▼</span>
+            </button>
+        `;
+
         card.innerHTML = html;
+
+        // Add expand/collapse functionality
+        const expandBtn = card.querySelector('.seed-expand-btn');
+        const expandedSection = card.querySelector('.seed-details-expanded');
+        const expandText = card.querySelector('.expand-text');
+        const expandIcon = card.querySelector('.expand-icon');
+
+        expandBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isExpanded = expandedSection.style.display !== 'none';
+            
+            if (isExpanded) {
+                expandedSection.style.display = 'none';
+                expandText.textContent = 'Show More';
+                expandIcon.textContent = '▼';
+                card.classList.remove('expanded');
+            } else {
+                expandedSection.style.display = 'block';
+                expandText.textContent = 'Show Less';
+                expandIcon.textContent = '▲';
+                card.classList.add('expanded');
+            }
+        });
+
+        // Add click handler for selection (on card, not button)
+        card.addEventListener('click', (e) => {
+            // Don't toggle if clicking the expand button
+            if (e.target.closest('.seed-expand-btn')) {
+                return;
+            }
+            this.toggleSeedSelection(seed);
+        });
+
         return card;
     }
 
