@@ -10,8 +10,6 @@ env:
   IBM_CLOUD_REGION: us-south
   CODE_ENGINE_PROJECT: garden-oracle-project
   CODE_ENGINE_APP: garden-oracle
-  REGISTRY_NAMESPACE: ${{ secrets.IBM_REGISTRY_NAMESPACE }}
-  IMAGE_NAME: garden-oracle
 
 jobs:
   deploy:
@@ -26,45 +24,22 @@ jobs:
           curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
           ibmcloud --version
           ibmcloud config --check-version=false
-          ibmcloud plugin install -f container-registry
           ibmcloud plugin install -f code-engine
 
       - name: Authenticate with IBM Cloud
         run: |
           ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }}
-          ibmcloud cr region-set ${{ env.IBM_CLOUD_REGION }}
-          ibmcloud cr login
 
-      - name: Build and push Docker image
-        env:
-          IBM_CR_TOKEN: ${{ secrets.IBM_CLOUD_API_KEY }}
-        run: |
-          IMAGE_TAG="${{ github.sha }}"
-          # Use icr.io (global) instead of regional endpoint
-          FULL_IMAGE_NAME="icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
-          LATEST_IMAGE_NAME="icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:latest"
-          
-          echo "Building image: ${FULL_IMAGE_NAME}"
-          docker build -t ${FULL_IMAGE_NAME} -t ${LATEST_IMAGE_NAME} .
-          
-          echo "Logging in to IBM Container Registry with Docker..."
-          echo "$IBM_CR_TOKEN" | docker login -u iamapikey --password-stdin icr.io
-          
-          echo "Pushing image to IBM Container Registry..."
-          docker push ${FULL_IMAGE_NAME}
-          docker push ${LATEST_IMAGE_NAME}
-          
-          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
-          echo "FULL_IMAGE_NAME=${FULL_IMAGE_NAME}" >> $GITHUB_ENV
-
-      - name: Deploy to Code Engine
+      - name: Deploy to Code Engine with source build
         run: |
           ibmcloud ce project select --name ${{ env.CODE_ENGINE_PROJECT }}
           
-          echo "Updating Code Engine application..."
+          echo "Deploying application with source code build..."
           ibmcloud ce app update \
             --name ${{ env.CODE_ENGINE_APP }} \
-            --image ${{ env.FULL_IMAGE_NAME }} \
+            --build-source . \
+            --build-context-dir . \
+            --build-dockerfile Dockerfile \
             --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
             --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
             --cpu 0.25 \
@@ -79,7 +54,6 @@ jobs:
           APP_URL=$(ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} --output json | jq -r '.status.url')
           echo "🚀 Application deployed successfully!"
           echo "📱 URL: ${APP_URL}"
-          echo "🏷️  Image: ${{ env.FULL_IMAGE_NAME }}"
           echo "✅ Commit: ${{ github.sha }}"
 
       - name: Deployment summary
@@ -87,7 +61,7 @@ jobs:
           echo "### 🌱 Garden Oracle Deployment" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ **Status:** Deployed successfully" >> $GITHUB_STEP_SUMMARY
-          echo "🏷️ **Image:** \`${{ env.FULL_IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "🏗️ **Build:** Code Engine source build" >> $GITHUB_STEP_SUMMARY
           echo "📝 **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "👤 **Deployed by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "⏰ **Time:** $(date -u)" >> $GITHUB_STEP_SUMMARY
