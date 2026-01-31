@@ -1,0 +1,90 @@
+name: Deploy to IBM Cloud Code Engine
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+env:
+  IBM_CLOUD_REGION: au-syd
+  IBM_CLOUD_RESOURCE_GROUP: Default
+  CODE_ENGINE_PROJECT: garden-oracle-project
+  CODE_ENGINE_APP: garden-oracle
+  REGISTRY_NAMESPACE: ${{ secrets.IBM_REGISTRY_NAMESPACE }}
+  IMAGE_NAME: garden-oracle
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install IBM Cloud CLI
+        run: |
+          curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+          ibmcloud --version
+          ibmcloud config --check-version=false
+          ibmcloud plugin install -f container-registry
+          ibmcloud plugin install -f code-engine
+
+      - name: Authenticate with IBM Cloud
+        run: |
+          ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }} -g ${{ env.IBM_CLOUD_RESOURCE_GROUP }}
+          ibmcloud cr region-set ${{ env.IBM_CLOUD_REGION }}
+          ibmcloud cr login
+
+      - name: Build and push Docker image
+        run: |
+          IMAGE_TAG="${{ github.sha }}"
+          FULL_IMAGE_NAME="${{ env.IBM_CLOUD_REGION }}.icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
+          LATEST_IMAGE_NAME="${{ env.IBM_CLOUD_REGION }}.icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:latest"
+          
+          echo "Building image: ${FULL_IMAGE_NAME}"
+          docker build -t ${FULL_IMAGE_NAME} -t ${LATEST_IMAGE_NAME} .
+          
+          echo "Pushing image to IBM Container Registry..."
+          docker push ${FULL_IMAGE_NAME}
+          docker push ${LATEST_IMAGE_NAME}
+          
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> $GITHUB_ENV
+          echo "FULL_IMAGE_NAME=${FULL_IMAGE_NAME}" >> $GITHUB_ENV
+
+      - name: Deploy to Code Engine
+        run: |
+          ibmcloud ce project select --name ${{ env.CODE_ENGINE_PROJECT }}
+          
+          echo "Updating Code Engine application..."
+          ibmcloud ce app update \
+            --name ${{ env.CODE_ENGINE_APP }} \
+            --image ${{ env.FULL_IMAGE_NAME }} \
+            --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
+            --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
+            --cpu 0.25 \
+            --memory 0.5G \
+            --min-scale 0 \
+            --max-scale 2 \
+            --port 8080 \
+            --wait
+
+      - name: Get application URL
+        run: |
+          APP_URL=$(ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} --output json | jq -r '.status.url')
+          echo "🚀 Application deployed successfully!"
+          echo "📱 URL: ${APP_URL}"
+          echo "🏷️  Image: ${{ env.FULL_IMAGE_NAME }}"
+          echo "✅ Commit: ${{ github.sha }}"
+
+      - name: Deployment summary
+        run: |
+          echo "### 🌱 Garden Oracle Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Status:** Deployed successfully" >> $GITHUB_STEP_SUMMARY
+          echo "🏷️ **Image:** \`${{ env.FULL_IMAGE_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "📝 **Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "👤 **Deployed by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "⏰ **Time:** $(date -u)" >> $GITHUB_STEP_SUMMARY
+
+# Made with Bob
