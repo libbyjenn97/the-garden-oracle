@@ -74,12 +74,28 @@ jobs:
           echo "Submitting build run..."
           ibmcloud ce buildrun submit --build garden-oracle-build --wait
           
-          echo "Updating application..."
-          ibmcloud ce app update \
-            --name ${{ env.CODE_ENGINE_APP }} \
-            --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
-            --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
-            --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
+          # Check if app exists
+          if ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} --output json 2>/dev/null | jq -e '.name' > /dev/null; then
+            echo "Updating existing application..."
+            ibmcloud ce app update \
+              --name ${{ env.CODE_ENGINE_APP }} \
+              --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
+              --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
+              --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
+          else
+            echo "Creating new application..."
+            ibmcloud ce app create \
+              --name ${{ env.CODE_ENGINE_APP }} \
+              --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
+              --registry-secret garden-oracle-registry-secret \
+              --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
+              --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
+              --cpu 0.25 \
+              --memory 0.5G \
+              --min-scale 0 \
+              --max-scale 2 \
+              --port 8080
+          fi
           
           echo "Deploying application with source code build..."
           ibmcloud ce app update \
