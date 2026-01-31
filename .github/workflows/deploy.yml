@@ -8,7 +8,6 @@ on:
 
 env:
   IBM_CLOUD_REGION: au-syd
-  IBM_CLOUD_RESOURCE_GROUP: Default
   CODE_ENGINE_PROJECT: garden-oracle-project
   CODE_ENGINE_APP: garden-oracle
   REGISTRY_NAMESPACE: ${{ secrets.IBM_REGISTRY_NAMESPACE }}
@@ -32,7 +31,7 @@ jobs:
 
       - name: Authenticate with IBM Cloud
         run: |
-          ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }} -g ${{ env.IBM_CLOUD_RESOURCE_GROUP }}
+          ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }}
           ibmcloud cr region-set ${{ env.IBM_CLOUD_REGION }}
           ibmcloud cr login
 
