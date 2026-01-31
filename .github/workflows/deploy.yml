@@ -78,6 +78,7 @@ jobs:
           ibmcloud ce app update \
             --name ${{ env.CODE_ENGINE_APP }} \
             --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
+            --build-clear \
             --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
             --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
 
