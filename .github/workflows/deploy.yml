@@ -40,14 +40,15 @@ jobs:
           IBM_CR_TOKEN: ${{ secrets.IBM_CLOUD_API_KEY }}
         run: |
           IMAGE_TAG="${{ github.sha }}"
-          FULL_IMAGE_NAME="${{ env.IBM_CLOUD_REGION }}.icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
-          LATEST_IMAGE_NAME="${{ env.IBM_CLOUD_REGION }}.icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:latest"
+          # Use icr.io (global) instead of regional endpoint
+          FULL_IMAGE_NAME="icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:${IMAGE_TAG}"
+          LATEST_IMAGE_NAME="icr.io/${{ env.REGISTRY_NAMESPACE }}/${{ env.IMAGE_NAME }}:latest"
           
           echo "Building image: ${FULL_IMAGE_NAME}"
           docker build -t ${FULL_IMAGE_NAME} -t ${LATEST_IMAGE_NAME} .
           
           echo "Logging in to IBM Container Registry with Docker..."
-          echo "$IBM_CR_TOKEN" | docker login -u iamapikey --password-stdin ${{ env.IBM_CLOUD_REGION }}.icr.io
+          echo "$IBM_CR_TOKEN" | docker login -u iamapikey --password-stdin icr.io
           
           echo "Pushing image to IBM Container Registry..."
           docker push ${FULL_IMAGE_NAME}
