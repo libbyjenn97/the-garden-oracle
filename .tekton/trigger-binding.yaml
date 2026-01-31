@@ -1,0 +1,14 @@
+apiVersion: tekton.dev/v1beta1
+kind: TriggerBinding
+metadata:
+  name: garden-oracle-trigger-binding
+spec:
+  params:
+    - name: repository
+      value: $(body.repository.url)
+    - name: branch
+      value: $(body.ref)
+    - name: revision
+      value: $(body.head_commit.id)
+
+# Made with Bob

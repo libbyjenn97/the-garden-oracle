@@ -1,5 +1,5 @@
 /**
- * Notion API Client for Garden Weather Oracle
+ * Notion API Client for Garden Oracle
  * Fetches seed data from Notion database
  */
 

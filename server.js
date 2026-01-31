@@ -88,7 +88,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`\n🌱 Garden Weather Oracle Server`);
+    console.log(`\n🌱 Garden Oracle Server`);
     console.log(`================================`);
     console.log(`✅ Server running on http://localhost:${PORT}`);
     console.log(`✅ Notion API proxy: http://localhost:${PORT}/api/notion/query`);

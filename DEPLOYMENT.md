@@ -1,6 +1,6 @@
-# Deploying Garden Weather Oracle to IBM Cloud Code Engine
+# Deploying Garden Oracle to IBM Cloud Code Engine
 
-This guide will help you deploy your Garden Weather Oracle app to IBM Cloud Code Engine.
+This guide will help you deploy your Garden Oracle app to IBM Cloud Code Engine.
 
 ## Prerequisites
 

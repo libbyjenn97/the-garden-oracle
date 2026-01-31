@@ -1,6 +1,12 @@
-# 🌱 Garden Weather Oracle 🌙
+# 🌱 Garden Oracle 🌙
 
 A mystical gardening companion that combines oracle card readings with lunar calendar guidance and your personal seed inventory from Notion.
+
+## 🚀 Quick Links
+
+- **[Deployment Guide](DEPLOYMENT.md)** - Deploy to IBM Cloud Code Engine
+- **[CI/CD Setup](CI-CD-SETUP.md)** - Automated deployment pipeline with Tekton
+- **Live App**: [Your Code Engine URL]
 
 ## ✨ Features
 

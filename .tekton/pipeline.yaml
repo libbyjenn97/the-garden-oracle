@@ -1,0 +1,99 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: garden-oracle-pipeline
+spec:
+  params:
+    - name: repository
+      description: The git repo URL
+    - name: branch
+      description: The git branch
+      default: main
+    - name: revision
+      description: The git revision/commit
+    - name: app-name
+      description: Name of the Code Engine application
+      default: garden-oracle
+    - name: registry-namespace
+      description: Container registry namespace
+    - name: registry-region
+      description: Container registry region
+      default: au-syd
+    - name: code-engine-project
+      description: Code Engine project name
+    - name: code-engine-region
+      description: Code Engine region
+      default: au-syd
+  
+  workspaces:
+    - name: pipeline-workspace
+  
+  tasks:
+    # Task 1: Clone the repository
+    - name: git-clone
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.repository)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: pipeline-workspace
+    
+    # Task 2: Build and push Docker image
+    - name: build-image
+      taskRef:
+        name: icr-containerize
+      runAfter:
+        - git-clone
+      params:
+        - name: path-to-context
+          value: .
+        - name: path-to-dockerfile
+          value: ./Dockerfile
+        - name: registry-region
+          value: $(params.registry-region)
+        - name: registry-namespace
+          value: $(params.registry-namespace)
+        - name: image-name
+          value: $(params.app-name)
+        - name: image-tag
+          value: $(params.revision)
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+    
+    # Task 3: Deploy to Code Engine
+    - name: deploy-to-code-engine
+      taskRef:
+        name: icr-code-engine-deploy
+      runAfter:
+        - build-image
+      params:
+        - name: app-name
+          value: $(params.app-name)
+        - name: image-name
+          value: $(params.registry-region).icr.io/$(params.registry-namespace)/$(params.app-name):$(params.revision)
+        - name: code-engine-project
+          value: $(params.code-engine-project)
+        - name: code-engine-region
+          value: $(params.code-engine-region)
+        - name: cpu
+          value: "0.25"
+        - name: memory
+          value: "0.5G"
+        - name: min-scale
+          value: "0"
+        - name: max-scale
+          value: "2"
+        - name: port
+          value: "8080"
+        - name: env-from-secrets
+          value: "garden-oracle-secrets"
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+
+# Made with Bob

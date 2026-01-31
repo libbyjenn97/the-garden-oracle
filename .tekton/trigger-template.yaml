@@ -1,0 +1,48 @@
+apiVersion: tekton.dev/v1beta1
+kind: TriggerTemplate
+metadata:
+  name: garden-oracle-trigger-template
+spec:
+  params:
+    - name: repository
+      description: The git repo URL
+    - name: branch
+      description: The git branch
+    - name: revision
+      description: The git revision/commit
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        name: garden-oracle-$(uid)
+      spec:
+        pipelineRef:
+          name: garden-oracle-pipeline
+        params:
+          - name: repository
+            value: $(tt.params.repository)
+          - name: branch
+            value: $(tt.params.branch)
+          - name: revision
+            value: $(tt.params.revision)
+          - name: app-name
+            value: garden-oracle
+          - name: registry-namespace
+            value: $(tt.params.registry-namespace)
+          - name: registry-region
+            value: au-syd
+          - name: code-engine-project
+            value: $(tt.params.code-engine-project)
+          - name: code-engine-region
+            value: au-syd
+        workspaces:
+          - name: pipeline-workspace
+            volumeClaimTemplate:
+              spec:
+                accessModes:
+                  - ReadWriteOnce
+                resources:
+                  requests:
+                    storage: 1Gi
+
+# Made with Bob

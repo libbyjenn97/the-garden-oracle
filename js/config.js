@@ -1,5 +1,5 @@
 /**
- * Configuration loader for Garden Weather Oracle
+ * Configuration loader for Garden Oracle
  * Loads environment variables and API credentials
  */
 
