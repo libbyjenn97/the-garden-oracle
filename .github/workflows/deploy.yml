@@ -29,6 +29,11 @@ jobs:
       - name: Authenticate with IBM Cloud
         run: |
           ibmcloud login --apikey ${{ secrets.IBM_CLOUD_API_KEY }} -r ${{ env.IBM_CLOUD_REGION }}
+          
+          # Get the first available resource group
+          RESOURCE_GROUP=$(ibmcloud resource groups --output json | jq -r '.[0].name')
+          echo "Targeting resource group: ${RESOURCE_GROUP}"
+          ibmcloud target -g ${RESOURCE_GROUP}
 
       - name: Deploy to Code Engine with source build
         run: |
