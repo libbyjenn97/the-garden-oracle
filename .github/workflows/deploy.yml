@@ -7,7 +7,7 @@ on:
   workflow_dispatch: # Allows manual trigger from GitHub UI
 
 env:
-  IBM_CLOUD_REGION: au-syd
+  IBM_CLOUD_REGION: us-south
   CODE_ENGINE_PROJECT: garden-oracle-project
   CODE_ENGINE_APP: garden-oracle
   REGISTRY_NAMESPACE: ${{ secrets.IBM_REGISTRY_NAMESPACE }}
