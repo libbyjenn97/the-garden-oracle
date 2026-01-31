@@ -30,7 +30,8 @@ class NotionClient {
      * Fetch all seeds from Notion database with pagination
      */
     async fetchAllSeeds(pageSize = 100) {
-        if (!this.notionToken || !this.databaseId) {
+        // Skip credential check if using proxy mode (credentials are 'proxy')
+        if (this.notionToken !== 'proxy' && (!this.notionToken || !this.databaseId)) {
             throw new Error('Notion credentials not initialized');
         }
 
