@@ -41,40 +41,18 @@ jobs:
           fi
           ibmcloud ce project select --name ${{ env.CODE_ENGINE_PROJECT }}
 
-      - name: Deploy to Code Engine with source build
+      - name: Trigger build
         run: |
-          # Check if app exists
-          if ibmcloud ce app get --name ${{ env.CODE_ENGINE_APP }} --output json 2>/dev/null | jq -e '.name' > /dev/null; then
-            echo "Application exists, updating..."
-            ibmcloud ce app update \
-              --name ${{ env.CODE_ENGINE_APP }} \
-              --build-source . \
-              --build-context-dir . \
-              --build-dockerfile Dockerfile \
-              --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
-              --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
-              --cpu 0.25 \
-              --memory 0.5G \
-              --min-scale 0 \
-              --max-scale 2 \
-              --port 8080 \
-              --wait
-          else
-            echo "Application doesn't exist, creating..."
-            ibmcloud ce app create \
-              --name ${{ env.CODE_ENGINE_APP }} \
-              --build-source . \
-              --build-context-dir . \
-              --build-dockerfile Dockerfile \
-              --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
-              --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
-              --cpu 0.25 \
-              --memory 0.5G \
-              --min-scale 0 \
-              --max-scale 2 \
-              --port 8080 \
-              --wait
-          fi
+          echo "Submitting build run..."
+          ibmcloud ce buildrun submit --build garden-oracle-build --wait
+          
+      - name: Update application environment variables
+        run: |
+          echo "Updating application with latest environment variables..."
+          ibmcloud ce app update \
+            --name ${{ env.CODE_ENGINE_APP }} \
+            --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
+            --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
           
           echo "Deploying application with source code build..."
           ibmcloud ce app update \
