@@ -79,13 +79,7 @@ jobs:
             --name ${{ env.CODE_ENGINE_APP }} \
             --image us.icr.io/cr-itz-c1mx6por/garden-oracle:latest \
             --env NOTION_TOKEN=${{ secrets.NOTION_TOKEN }} \
-            --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }} \
-            --cpu 0.25 \
-            --memory 0.5G \
-            --min-scale 0 \
-            --max-scale 2 \
-            --port 8080 \
-            --wait
+            --env NOTION_DATABASE_ID=${{ secrets.NOTION_DATABASE_ID }}
 
       - name: Get application URL
         run: |
